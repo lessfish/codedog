@@ -31,7 +31,7 @@ node cli fish.md 600 800
 
 ## cli
 
-- npm install -g codedog 
+- `npm install -g codedog`
 - `codedog xx.md` or `codedog xx.md width height`
 
 ## notice
