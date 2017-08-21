@@ -2,6 +2,9 @@
   "name": "codedog",
   "authoer": "hanzichi",
   "description": "markdown to html with online preview",
+  "bin": {
+    "codedog": "./index.js"
+  },
   "devDependencies": {
     "marked": "^0.3.6"
   }
