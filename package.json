@@ -1,0 +1,8 @@
+{
+  "name": "codedog",
+  "authoer": "hanzichi",
+  "description": "markdown to html with online preview",
+  "devDependencies": {
+    "marked": "^0.3.6"
+  }
+}
