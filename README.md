@@ -12,22 +12,27 @@
 
 - `cd codedog`
 - `npm install`
-- `node index xx.md`
+- `node cli xx.md`
 
 ### advanced usage
 
 ```
-node index xx.md width height
+node cli xx.md width height
 ```
 
 for example:
 
 ```
-node index fish.md 600 800
+node cli fish.md 600 800
 ```
 
 - width (the width of the code editor as well as the other code areas, default `900`)
 - height (the height of the code editor, default `270`)
+
+## cli
+
+- npm install -g codedog 
+- `codedog xx.md` or `codedog xx.md width height`
 
 ## notice
 

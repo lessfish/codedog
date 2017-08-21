@@ -1,7 +1,7 @@
-const fs = require('fs')
 const marked = require('marked')
 
-function markdown2html(filePath, editorWidth, editorHeight) {
+// markdown to html with `<code class="lang-html">xx</code>` replaced
+function markdown2html(mdString, editorWidth, editorHeight) {
   const unescapeMap = {
     '&amp;': '&',
     '&lt;': '<',
@@ -9,7 +9,6 @@ function markdown2html(filePath, editorWidth, editorHeight) {
     '&quot;': '"',
   }
 
-  let mdString = fs.readFileSync(filePath, 'utf-8')
   let html = marked(mdString)
 
   // unescape
