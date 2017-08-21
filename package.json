@@ -1,6 +1,6 @@
 {
   "name": "codedog",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "authoer": "hanzichi",
   "description": "markdown to html with online preview",
   "main": "./index.js",
