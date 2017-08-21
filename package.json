@@ -1,11 +1,13 @@
 {
   "name": "codedog",
+  "version": "0.0.1",
   "authoer": "hanzichi",
   "description": "markdown to html with online preview",
+  "main": "./index.js",
   "bin": {
-    "codedog": "./index.js"
+    "codedog": "./cli.js"
   },
-  "devDependencies": {
+  "dependencies": {
     "marked": "^0.3.6"
   }
 }
