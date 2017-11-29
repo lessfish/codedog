@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 const fs = require('fs')
-const codedog = require('./index.js')
+const codedog = require('../lib/index.js')
 
 let filePath = process.argv[2]
 let outPath = filePath.replace('md', 'html')
