@@ -15,11 +15,6 @@
 }
 ```
 
-```js 
-var s = "JavaScript syntax highlighting";
-alert(s);
-```
-
 ## 半椭圆
 
 border-radius 对应的各个展开式属性（如果要对其分别设置水平和垂直半径，不需要用 `/`，空格即可）：
