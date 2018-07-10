@@ -6,8 +6,8 @@
 
 我们可以比较下原始的 markdown 文件和用 codedog 二次生成后的文件：
 
-- [原始的 markdown 文件](https://raw.githubusercontent.com/hanzichi/codedog/master/example/demo.md)／[效果](https://github.com/hanzichi/codedog/blob/master/example/demo.md)
-- [codedog 二次生成后的 html 文件](https://github.com/hanzichi/codedog/blob/master/example/demo.html)／[效果](https://hanzichi.github.io/codedog/example/demo.html)
+- [原始的 markdown 文件](https://raw.githubusercontent.com/hanzichi/codedog/master/example/index.md)／[效果](https://github.com/hanzichi/codedog/blob/master/example/index.md)
+- [codedog 二次生成后的 html 文件](https://github.com/hanzichi/codedog/blob/master/example/index.html)／[效果](https://hanzichi.github.io/codedog/example/index.html)
 
 另外，这个项目是我为 [css-secrets](https://github.com/hanzichi/css-secrets) 特意创造的，更多应用可以点 [这里](https://github.com/hanzichi/css-secrets/blob/master/README.md) 查看
 
@@ -20,7 +20,6 @@
 ### 本地安装
 
 ```bash
-git clone git@github.com:hanzichi/codedog.git
 npm install
 npm link
 ```
@@ -42,6 +41,16 @@ codedog xx.md width height
 
 - width (the width of the code editor as well as other code blocks, default to 100% of its parent node's width)
 - height (the height of the code editor, default to `270` (px))
+
+## 开发
+
+```bash
+npm install gulp -g
+npm install
+gulp
+```
+
+接下去在 `lib` 和 `example` 两个文件夹中修改文件，codedog 会自动编译 index.md 文件，生成新的 index.html 文件并且自动刷新打开的页面
 
 ## 注意事项
 

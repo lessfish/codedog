@@ -1,6 +1,6 @@
 {
   "name": "codedog",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "author": "hanzichi",
   "description": "markdown to html with online preview",
   "homepage": "https://github.com/hanzichi/codedog",
@@ -11,6 +11,11 @@
   "dependencies": {
     "ejs": "^2.6.1",
     "marked": "^0.3.6"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.24.5",
+    "decache": "^4.4.0",
+    "gulp": "^3.9.1"
   },
   "licenses": "MIT"
 }
