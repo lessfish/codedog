@@ -58,6 +58,7 @@ gulp
 - **markdown 中标注为 `html` 的代码块会被 codedog 解析**，并生成在线 demo，其余代码块不会解析
 - 被解析的代码块，支持内联 css 和 js，支持绝对路径的外链 css 和 js
 - 点击新页面打开，会在新的页面打开在线 demo
+- 页面 title 默认为第一次出现的 `# xxx` 中的 `xxx`，且 markdown 文件中一级标题只允许出现一次，且默认 `# xxx` 肯定早于其他二级标题、三级标题等出现
 
 ## lisence
 
