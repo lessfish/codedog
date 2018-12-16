@@ -4,10 +4,16 @@
   "author": "hanzichi",
   "description": "markdown to html with online demo preview",
   "homepage": "https://github.com/hanzichi/codedog",
-  "repository": "https://github.com/hanzichi/codedog",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hanzichi/codedog"
+  },
   "main": "./lib/index.js",
   "bin": {
     "codedog": "./bin/cli.js"
+  },
+  "scripts": {
+    "dev": "gulp"
   },
   "dependencies": {
     "ejs": "^2.6.1",
