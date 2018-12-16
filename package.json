@@ -1,9 +1,10 @@
 {
   "name": "codedog",
-  "version": "1.1.0",
+  "version": "2.0.0",
   "author": "hanzichi",
-  "description": "markdown to html with online preview",
+  "description": "markdown to html with online demo preview",
   "homepage": "https://github.com/hanzichi/codedog",
+  "repository": "https://github.com/hanzichi/codedog",
   "main": "./lib/index.js",
   "bin": {
     "codedog": "./bin/cli.js"
@@ -14,8 +15,7 @@
   },
   "devDependencies": {
     "browser-sync": "^2.24.5",
-    "decache": "^4.4.0",
     "gulp": "^3.9.1"
   },
-  "licenses": "MIT"
+  "license": "MIT"
 }

@@ -6,14 +6,12 @@
 
 我们可以比较下原始的 markdown 文件和用 codedog 二次生成后的文件：
 
-- [原始的 markdown 文件](https://raw.githubusercontent.com/hanzichi/codedog/master/example/index.md)／[效果](https://github.com/hanzichi/codedog/blob/master/example/index.md)
-- [codedog 二次生成后的 html 文件](https://github.com/hanzichi/codedog/blob/master/example/index.html)／[效果](https://hanzichi.github.io/codedog/example/index.html)
+- [原始的 markdown 文件](https://raw.githubusercontent.com/hanzichi/codedog/master/example/example.md)／[效果](https://github.com/hanzichi/codedog/blob/master/example/example.md)
+- [codedog 二次生成后的 html 文件](https://github.com/hanzichi/codedog/blob/master/example/example.html)／[效果](https://hanzichi.github.io/codedog/example/example.html)
 
 另外，这个项目是我为 [css-secrets](https://github.com/hanzichi/css-secrets) 特意创造的，更多应用可以点 [这里](https://github.com/hanzichi/css-secrets/blob/master/README.md) 查看
 
 ## 用法
-
-因为纯属个人工具，没有很大的应用需求，故不再在 [npmjs](https://www.npmjs.com/package/codedog) 更新
 
 该项目使用非常简单，支持模块引用和全局引用，个人推荐全局引用方式
 
@@ -50,7 +48,7 @@ npm install
 gulp
 ```
 
-接下去在 `lib` 和 `example` 两个文件夹中修改文件，codedog 会自动编译 index.md 文件，生成新的 index.html 文件并且自动刷新打开的页面
+接下去在 `lib` 和 `example` 两个文件夹中修改文件，codedog 会自动编译 example.md 文件，生成新的 example.html 文件并且自动刷新打开的页面
 
 ## 注意事项
 
@@ -58,7 +56,8 @@ gulp
 - **markdown 中标注为 `html` 的代码块会被 codedog 解析**，并生成在线 demo，其余代码块不会解析
 - 被解析的代码块，支持内联 css 和 js，支持绝对路径的外链 css 和 js
 - 点击新页面打开，会在新的页面打开在线 demo
-- 页面 title 默认为第一次出现的 `# xxx` 中的 `xxx`，且 markdown 文件中一级标题只允许出现一次，且默认 `# xxx` 肯定早于其他二级标题、三级标题等出现
+- 页面 title 默认为第一次出现的一级标题，且 markdown 文件中一级标题只允许出现一次，且默认一级标题肯定早于其他二级标题、三级标题等出现
+- 不支持移动端，个人觉得移动端上编辑代码&预览效果不方便，故不提供支持
 
 ## lisence
 

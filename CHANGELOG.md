@@ -1,0 +1,2 @@
+- 2018-12-08 增加 MathJax 支持（附 [一个生成 LaTex 公式的网站](https://webdemo.myscript.com/views/math/index.html)）
+- 2018-12-16 修改 api，release 2.0.0

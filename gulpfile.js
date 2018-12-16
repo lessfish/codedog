@@ -1,20 +1,21 @@
 const gulp = require('gulp')
 const browserSync = require('browser-sync').create()
 const reload = browserSync.reload
-let   codedog = require('./lib')
 const fs = require('fs')
-const decache = require('decache')
+// const decache = require('decache')
 
-// 将 index.md 重新编译，并且刷新浏览器
+let codedog = require('./lib')
+
+// 将 example.md 重新编译，自动刷新浏览器
 gulp.task('compile', () => {
-  let filePath = './example/index.md'
+  let filePath = './example/example.md'
   let outPath = filePath.replace('md', 'html')
   let mdString = fs.readFileSync(filePath, 'utf-8')
   // 消除 require node_module 时的缓存
   // decache('./lib')
   delete require.cache[require.resolve('./lib')]
   codedog = require('./lib') // fresh start
-  let html = codedog.markdown2html(mdString, 0, 270)
+  let html = codedog(mdString, 0, 270)
   fs.writeFileSync(outPath, html)
 })
 
@@ -25,7 +26,7 @@ gulp.task('reloadBrowser', () => {
 gulp.task('server', ['compile'], () => {
   browserSync.init({
     server: {
-      baseDir: './example'  // 根目录，index.html 文件所在的目录
+      baseDir: './example'  // example.html 文件所在的目录
     }
   })
 

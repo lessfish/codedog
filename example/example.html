@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/> -->
+  <title>条纹背景</title>
+  <link href="//cdn.bootcss.com/highlight.js/9.10.0/styles/monokai-sublime.min.css" rel="stylesheet">
+  <link href="//cdn.bootcss.com/github-markdown-css/2.9.0/github-markdown.min.css" rel="stylesheet">
+  <link href="//cdn.bootcss.com/normalize/8.0.0/normalize.min.css" rel="stylesheet">
+  <script src="//cdn.bootcss.com/ace/1.3.3/ace.js"></script>
+  <style type="text/css">
+    .codedog {
+      
+      height: 300px;
+      margin-bottom: 16px;
+    }
+
+    .codedog .codedog-nav {
+      height: 30px;      
+    } 
+
+    .codedog .codedog-nav .btn-new-page {
+      float: right;
+    } 
+
+    .codedog .codedog-main {
+      height: 270px;
+    }
+
+    .codedog .codedog-editor { 
+      width: 50%;
+      height: 100%;
+      float: left;
+    }
+
+    .codedog .result {
+      width: 50%;
+      height: 100%;
+      float: left;
+      border: 1px solid #999;
+      box-sizing: border-box;
+    }
+
+    .codedog .result .preview {
+      width: 100%;
+      height: 100%;
+    }
+
+    /* 
+      解决 github-markdown.css 和 highlights 引入的 css 的样式冲突问题 
+      https://github.com/sindresorhus/github-markdown-css/issues/52
+      overwrite it
+    */
+    .hljs {
+      
+      background-color: #23241f !important;
+      display: block !important;
+      padding: 10px !important;
+    }
+
+    .markdown-body {
+      background: #fff;
+      box-sizing: border-box;
+      min-width: 200px;
+      max-width: 980px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 45px;
+      flex: 1;
+    }
+
+    .markdown-body pre {
+      background-color: transparent !important;
+      padding-left: 0 !important;
+      margin-bottom: 0 !important;
+    }
+
+    .markdown-body img {
+      zoom: 0.5;
+    }
+    
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      margin: 0;
+      padding: 10px 10px 0 10px;
+      box-sizing: border-box;
+      background: #e2e2e2;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 10px;
+    }
+
+    .footer > a {
+      color: #2c3e50;
+    }
+  </style>
+</head>
+<body>
+<div class="markdown-body"><h1 id="-">条纹背景</h1>
+<h2 id="-">难题</h2>
+<p>以前想要在网页中实现条纹图案，可能需要创建一个单独的位图文件，然后每次需要做些调整时，都用图像编辑器来修改它。现在我们可以直接在 CSS 中创建条纹图案</p>
+<h2 id="-">水平条纹</h2>
+<p>该法能实现水平条纹的核心原因是：如果多个色标具有相同的位置，它们会产生一个无限小的过渡区域</p>
+<div class="codedog" id="codedog0">
+  <div class="codedog-nav">
+    <button class="btn-new-page">新页面打开</button>
+  </div>
+  <div class="codedog-main">
+    <div id="editor0" class="codedog-editor"></div>
+    <div class="result">
+      <iframe class="preview" frameborder=0></iframe>
+    </div>
+  </div>
+</div>
+<script>
+  let editor0 = ace.edit("editor0")
+  editor0.$blockScrolling = 1
+  editor0.setTheme("ace/theme/monokai")
+  editor0.getSession().setMode("ace/mode/html")
+  editor0.getSession().setTabSize(2)
+  editor0.getSession().setValue(`<body>
+<style>
+  body {
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(#fb3 50%, #58a 50%);
+    background-size: 100% 30px;
+  }
+</style>
+</body>`)
+
+  let iframe0 = document.querySelector("#codedog0 .preview");
+  iframe0.srcdoc = `<body>
+<style>
+  body {
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(#fb3 50%, #58a 50%);
+    background-size: 100% 30px;
+  }
+</style>
+</body>` + '<style>body{margin:0; padding:0;}</style>'
+
+  editor0.getSession().on('change', () => {
+    iframe0.srcdoc = editor0.getValue() + '<style>body{margin:0; padding:0;}</style>'
+  })
+</script>
+<p>以上 demo 中每个条纹的高度是 15px（它有两个渐变色，分别占据 50%，总共 30px）</p>
+<p>为了避免每次改动数值时需要修改两个数字，我们可以再次从规范那里找到捷径：</p>
+<blockquote>
+<p>如果某个色标的位置值比整个列表中在它之前的色标的位置值都要小，则该色标的位置值会被设置为它前面所有色标位置值的最大值</p>
+</blockquote>
+<div class="codedog" id="codedog1">
+  <div class="codedog-nav">
+    <button class="btn-new-page">新页面打开</button>
+  </div>
+  <div class="codedog-main">
+    <div id="editor1" class="codedog-editor"></div>
+    <div class="result">
+      <iframe class="preview" frameborder=0></iframe>
+    </div>
+  </div>
+</div>
+<script>
+  let editor1 = ace.edit("editor1")
+  editor1.$blockScrolling = 1
+  editor1.setTheme("ace/theme/monokai")
+  editor1.getSession().setMode("ace/mode/html")
+  editor1.getSession().setTabSize(2)
+  editor1.getSession().setValue(`<body>
+<style>
+  body {
+    background: linear-gradient(#fb3 50%, #58a 0);
+    background-size: 100% 30px;
+  }
+</style>
+</body>`)
+
+  let iframe1 = document.querySelector("#codedog1 .preview");
+  iframe1.srcdoc = `<body>
+<style>
+  body {
+    background: linear-gradient(#fb3 50%, #58a 0);
+    background-size: 100% 30px;
+  }
+</style>
+</body>` + '<style>body{margin:0; padding:0;}</style>'
+
+  editor1.getSession().on('change', () => {
+    iframe1.srcdoc = editor1.getValue() + '<style>body{margin:0; padding:0;}</style>'
+  })
+</script>
+<h2 id="-">垂直条纹</h2>
+<div class="codedog" id="codedog2">
+  <div class="codedog-nav">
+    <button class="btn-new-page">新页面打开</button>
+  </div>
+  <div class="codedog-main">
+    <div id="editor2" class="codedog-editor"></div>
+    <div class="result">
+      <iframe class="preview" frameborder=0></iframe>
+    </div>
+  </div>
+</div>
+<script>
+  let editor2 = ace.edit("editor2")
+  editor2.$blockScrolling = 1
+  editor2.setTheme("ace/theme/monokai")
+  editor2.getSession().setMode("ace/mode/html")
+  editor2.getSession().setTabSize(2)
+  editor2.getSession().setValue(`<body>
+<style>
+  body {
+    background: linear-gradient(90deg, #fb3 50%, #58a 0);
+    background-size: 30px 100%;
+  }
+</style>
+</body>`)
+
+  let iframe2 = document.querySelector("#codedog2 .preview");
+  iframe2.srcdoc = `<body>
+<style>
+  body {
+    background: linear-gradient(90deg, #fb3 50%, #58a 0);
+    background-size: 30px 100%;
+  }
+</style>
+</body>` + '<style>body{margin:0; padding:0;}</style>'
+
+  editor2.getSession().on('change', () => {
+    iframe2.srcdoc = editor2.getValue() + '<style>body{margin:0; padding:0;}</style>'
+  })
+</script>
+<p>与水平条纹实现的主要差别在于：我们需要在开头加上一个额外的参数来指定渐变的方向。在水平条纹的代码中，我们其实也可以加上这个参数，只不过它的默认值 to bottom 本来就跟我们的意图一致，所以可省略。最后，我们还需要把 background-size 的值颠倒一下</p>
+<h2 id="-">斜向条纹</h2>
+<div class="codedog" id="codedog3">
+  <div class="codedog-nav">
+    <button class="btn-new-page">新页面打开</button>
+  </div>
+  <div class="codedog-main">
+    <div id="editor3" class="codedog-editor"></div>
+    <div class="result">
+      <iframe class="preview" frameborder=0></iframe>
+    </div>
+  </div>
+</div>
+<script>
+  let editor3 = ace.edit("editor3")
+  editor3.$blockScrolling = 1
+  editor3.setTheme("ace/theme/monokai")
+  editor3.getSession().setMode("ace/mode/html")
+  editor3.getSession().setTabSize(2)
+  editor3.getSession().setValue(`<body>
+<style>
+  body {
+    background: linear-gradient(45deg, #fb3 50%, #58a 0);
+    background-size: 30px 30px;
+  }
+</style>
+</body>`)
+
+  let iframe3 = document.querySelector("#codedog3 .preview");
+  iframe3.srcdoc = `<body>
+<style>
+  body {
+    background: linear-gradient(45deg, #fb3 50%, #58a 0);
+    background-size: 30px 30px;
+  }
+</style>
+</body>` + '<style>body{margin:0; padding:0;}</style>'
+
+  editor3.getSession().on('change', () => {
+    iframe3.srcdoc = editor3.getValue() + '<style>body{margin:0; padding:0;}</style>'
+  })
+</script>
+<p>这个方法行不通。原因在于 <strong>单个切片需要包含四条条纹</strong>，而不是两条，只有这样才能做到无缝拼接</p>
+<div class="codedog" id="codedog4">
+  <div class="codedog-nav">
+    <button class="btn-new-page">新页面打开</button>
+  </div>
+  <div class="codedog-main">
+    <div id="editor4" class="codedog-editor"></div>
+    <div class="result">
+      <iframe class="preview" frameborder=0></iframe>
+    </div>
+  </div>
+</div>
+<script>
+  let editor4 = ace.edit("editor4")
+  editor4.$blockScrolling = 1
+  editor4.setTheme("ace/theme/monokai")
+  editor4.getSession().setMode("ace/mode/html")
+  editor4.getSession().setTabSize(2)
+  editor4.getSession().setValue(`<body>
+<style>
+  body {
+    background: linear-gradient(45deg, 
+      #fb3 25%, #58a 0, #58a 50%, 
+      #fb3 0, #fb3 75%, #58a 0);
+    background-size: 30px 30px;
+  }
+</style>
+</body>`)
+
+  let iframe4 = document.querySelector("#codedog4 .preview");
+  iframe4.srcdoc = `<body>
+<style>
+  body {
+    background: linear-gradient(45deg, 
+      #fb3 25%, #58a 0, #58a 50%, 
+      #fb3 0, #fb3 75%, #58a 0);
+    background-size: 30px 30px;
+  }
+</style>
+</body>` + '<style>body{margin:0; padding:0;}</style>'
+
+  editor4.getSession().on('change', () => {
+    iframe4.srcdoc = editor4.getValue() + '<style>body{margin:0; padding:0;}</style>'
+  })
+</script>
+<p>但是这样的结果条纹很明显比之前的细，根据计算，<strong>我们需要设置单个切片的宽度是之前的 \(\sqrt2\) 倍</strong></p>
+<div class="codedog" id="codedog5">
+  <div class="codedog-nav">
+    <button class="btn-new-page">新页面打开</button>
+  </div>
+  <div class="codedog-main">
+    <div id="editor5" class="codedog-editor"></div>
+    <div class="result">
+      <iframe class="preview" frameborder=0></iframe>
+    </div>
+  </div>
+</div>
+<script>
+  let editor5 = ace.edit("editor5")
+  editor5.$blockScrolling = 1
+  editor5.setTheme("ace/theme/monokai")
+  editor5.getSession().setMode("ace/mode/html")
+  editor5.getSession().setTabSize(2)
+  editor5.getSession().setValue(`<body>
+<style>
+  body {
+    background: linear-gradient(45deg, 
+      #fb3 25%, #58a 0, #58a 50%, 
+      #fb3 0, #fb3 75%, #58a 0);
+    background-size: 42px 42px;
+  }
+</style>
+</body>`)
+
+  let iframe5 = document.querySelector("#codedog5 .preview");
+  iframe5.srcdoc = `<body>
+<style>
+  body {
+    background: linear-gradient(45deg, 
+      #fb3 25%, #58a 0, #58a 50%, 
+      #fb3 0, #fb3 75%, #58a 0);
+    background-size: 42px 42px;
+  }
+</style>
+</body>` + '<style>body{margin:0; padding:0;}</style>'
+
+  editor5.getSession().on('change', () => {
+    iframe5.srcdoc = editor5.getValue() + '<style>body{margin:0; padding:0;}</style>'
+  })
+</script>
+<h2 id="-">更好的斜向条纹</h2>
+<p>我们将上面的代码修改角度，会发现条纹完全错乱了（try it!）</p>
+<p>幸运的是，我们还有更好的方法来创建斜向条纹。linear-gradient() 和 radial-gradient() 还各有一个循环式的加强版：repeating-linear-gradient() 和 repeating-radial-gradient()。它们的工作方式和前两者类似，只有一点不同：<strong>色标是无限循环重复的，直到填满整个背景</strong>。</p>
+<div class="codedog" id="codedog6">
+  <div class="codedog-nav">
+    <button class="btn-new-page">新页面打开</button>
+  </div>
+  <div class="codedog-main">
+    <div id="editor6" class="codedog-editor"></div>
+    <div class="result">
+      <iframe class="preview" frameborder=0></iframe>
+    </div>
+  </div>
+</div>
+<script>
+  let editor6 = ace.edit("editor6")
+  editor6.$blockScrolling = 1
+  editor6.setTheme("ace/theme/monokai")
+  editor6.getSession().setMode("ace/mode/html")
+  editor6.getSession().setTabSize(2)
+  editor6.getSession().setValue(`<body>
+<style>
+  body {
+    background: repeating-linear-gradient(45deg,
+      #fb3, #fb3 15px, #58a 0, #58a 30px);
+  }
+</style>
+</body>`)
+
+  let iframe6 = document.querySelector("#codedog6 .preview");
+  iframe6.srcdoc = `<body>
+<style>
+  body {
+    background: repeating-linear-gradient(45deg,
+      #fb3, #fb3 15px, #58a 0, #58a 30px);
+  }
+</style>
+</body>` + '<style>body{margin:0; padding:0;}</style>'
+
+  editor6.getSession().on('change', () => {
+    iframe6.srcdoc = editor6.getValue() + '<style>body{margin:0; padding:0;}</style>'
+  })
+</script>
+<ul>
+<li>可以随意变换角度（try it!）</li>
+<li>15px 是指渐变轴上度量到的距离，再也不用去乘以 \(\sqrt2\) 了</li>
+<li>同理可以生成水平和垂直条纹（但是请注意，在这个方法中，无论条纹的角度如何，我们在创建双色条纹时都需要用到四个色标，这意味着，<strong>我们最好用前面的方法来实现水平条纹或者垂直条纹，而用这种方法实现斜向条纹</strong>）</li>
+</ul>
+<h2 id="-">灵活的同色系条纹</h2>
+<p>大多数情况下，我们想要的条纹图案并不是由差异极大的几种颜色组成的，<strong>这些颜色往往属于同一色系，只是在明度方面有着轻微的差异</strong></p>
+<div class="codedog" id="codedog7">
+  <div class="codedog-nav">
+    <button class="btn-new-page">新页面打开</button>
+  </div>
+  <div class="codedog-main">
+    <div id="editor7" class="codedog-editor"></div>
+    <div class="result">
+      <iframe class="preview" frameborder=0></iframe>
+    </div>
+  </div>
+</div>
+<script>
+  let editor7 = ace.edit("editor7")
+  editor7.$blockScrolling = 1
+  editor7.setTheme("ace/theme/monokai")
+  editor7.getSession().setMode("ace/mode/html")
+  editor7.getSession().setTabSize(2)
+  editor7.getSession().setValue(`<body>
+<style>
+  body {
+    background: repeating-linear-gradient(30deg,
+      #79b, #79b 15px, #58a 0, #58a 30px);
+  }
+</style>
+</body>`)
+
+  let iframe7 = document.querySelector("#codedog7 .preview");
+  iframe7.srcdoc = `<body>
+<style>
+  body {
+    background: repeating-linear-gradient(30deg,
+      #79b, #79b 15px, #58a 0, #58a 30px);
+  }
+</style>
+</body>` + '<style>body{margin:0; padding:0;}</style>'
+
+  editor7.getSession().on('change', () => {
+    iframe7.srcdoc = editor7.getValue() + '<style>body{margin:0; padding:0;}</style>'
+  })
+</script>
+<p>条纹是由一个主色调（#58a）和它的浅色变体所组成的。但是，这两种颜色之间的关系在代码中并没有体现出来。如果我们想要改变这个条纹的主色调，甚至需要修改四处！</p>
+<p>幸运的是，还有一种更好的方法：不再为每种条纹单独指定颜色，<strong>而是把最深的颜色指定为背景色</strong>，同时把半透明白色的条纹叠加在背景色之上来得到浅色条纹</p>
+<div class="codedog" id="codedog8">
+  <div class="codedog-nav">
+    <button class="btn-new-page">新页面打开</button>
+  </div>
+  <div class="codedog-main">
+    <div id="editor8" class="codedog-editor"></div>
+    <div class="result">
+      <iframe class="preview" frameborder=0></iframe>
+    </div>
+  </div>
+</div>
+<script>
+  let editor8 = ace.edit("editor8")
+  editor8.$blockScrolling = 1
+  editor8.setTheme("ace/theme/monokai")
+  editor8.getSession().setMode("ace/mode/html")
+  editor8.getSession().setTabSize(2)
+  editor8.getSession().setValue(`<body>
+<style>
+  body {
+    background: #58a;
+    background-image: repeating-linear-gradient(30deg,
+      hsla(0, 0%, 100%, .1),
+      hsla(0, 0%, 100%, .1) 15px,
+      transparent 0, transparent 30px);
+  }
+</style>
+</body>`)
+
+  let iframe8 = document.querySelector("#codedog8 .preview");
+  iframe8.srcdoc = `<body>
+<style>
+  body {
+    background: #58a;
+    background-image: repeating-linear-gradient(30deg,
+      hsla(0, 0%, 100%, .1),
+      hsla(0, 0%, 100%, .1) 15px,
+      transparent 0, transparent 30px);
+  }
+</style>
+</body>` + '<style>body{margin:0; padding:0;}</style>'
+
+  editor8.getSession().on('change', () => {
+    iframe8.srcdoc = editor8.getValue() + '<style>body{margin:0; padding:0;}</style>'
+  })
+</script>
+</div>
+<div class="footer">Powered by <a href="//github.com/hanzichi/codedog">codedog</a></div>
+<script src="//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+<script src="//cdn.bootcss.com/mathjax/2.7.4/MathJax.js?config=default"></script>
+<script>
+function runCode(editorId) {
+  let code = ace.edit(editorId).getValue()
+  let handler = window.open('')
+  handler.opener = null
+  handler.document.write(code)
+  handler.document.close()
+}
+
+document.onclick = e => {
+  let target = e.target
+  if (target.className !== 'btn-new-page') 
+    return
+
+  runCode(target.parentNode.nextElementSibling.children[0])
+}
+
+hljs.initHighlightingOnLoad()
+</script>
+</body>
+</html>
