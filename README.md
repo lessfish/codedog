@@ -18,6 +18,7 @@
 ### 本地安装
 
 ```bash
+$ git clone git@github.com:hanzichi/codedog.git
 $ npm install
 $ npm link
 ```
@@ -37,8 +38,8 @@ $ codedog xx.md width height
 
 没错，codedog 几乎不提供任何参数，唯二提供的两个可选参数是在线 demo 的宽度和高度：
 
-- width (the width of the code editor as well as other code blocks, default is 100% of its parent node's width)
-- height (the height of the code editor, default to `270px`）
+- `width` the width of the code editor as well as other code blocks, default value is 100% of its parent node's width (`0` is the same as default)
+- `height` the height of the code editor, default value is `270px`
 
 ## 开发
 
@@ -46,6 +47,8 @@ $ codedog xx.md width height
 $ npm install
 $ npm run dev
 ```
+
+run dev 后会自动打开浏览器，打开的 url 后跟上 example.html 即可
 
 接下去在 `lib` 和 `example` 两个文件夹中修改文件，codedog 会自动编译 example.md 文件，生成新的 example.html 文件并且自动刷新打开的页面
 
